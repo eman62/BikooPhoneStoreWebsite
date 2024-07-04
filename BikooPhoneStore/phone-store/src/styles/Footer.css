@@ -1,0 +1,67 @@
+.contact-info-container {
+    position: relative;
+    width: 100%;
+}
+
+.background-image {
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 570px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.content {
+    text-align: center;
+    color: white;
+}
+
+.logo {
+    width: 150px;
+    margin-bottom: 5px;
+}
+
+.store-info {
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.phone-numbers,
+.address {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    margin-top: 30px;
+}
+
+.phone-icon,
+.address-icon {
+    margin-right: 10px;
+}
+
+.phone-numbers p,
+.address p {
+    margin: 0;
+}
+
+.copyright {
+    position: absolute;
+    bottom: 10px;
+    left: 50%;
+    transform: translateX(-50%);
+    color: white;
+   
+}
+.phone-numbers {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    justify-content: center;
+}
+
+.phone-numbers .phone-icon {
+    margin-right: 10px;
+    margin-left: 10%;
+}

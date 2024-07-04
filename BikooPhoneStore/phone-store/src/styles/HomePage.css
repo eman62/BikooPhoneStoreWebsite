@@ -1,0 +1,13 @@
+.home-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    /* Ensure the page takes up at least the viewport height */
+}
+
+.main-content {
+    flex-grow: 1;
+    /* Grow to fill remaining space */
+}
+
+/* Other styles for components can be added here */

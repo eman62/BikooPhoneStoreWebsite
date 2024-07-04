@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="./styles/style.css">
+</head>
+
+<body>
+    <div class="container"  >
+        <h2 >Product</h2>
+
+        <!-- Add Product Button -->
+        <button type="button" class="btn btn-success mb-3" data-toggle="modal" data-target="#addProductModal">
+            Add Product
+        </button>
+
+        <div id="productList" class="row products"></div>
+    </div>
+
+    <!-- Modal for updating product -->
+    <div class="modal fade" id="updateProductModal" tabindex="-1" role="dialog"
+        aria-labelledby="updateProductModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="updateProductModalLabel">Update Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="updateProductForm">
+                        <input type="hidden" id="productId">
+                        <div class="form-group">
+                            <label for="updateName">Name</label>
+                            <select class="form-control" id="updateName" required>
+                                <option value="باور بانك">باور بانك</option>
+                                <option value="كفرات">كفرات</option>
+                                <option value="وصلات">وصلات</option>
+                                <option value="شواحن">شواحن</option>
+                                <option value="ساعه سمارت">ساعه سمارت</option>
+                                <option value="سماعه بسلك">سماعه بسلك</option>
+                                <option value="أيربودز">أيربودز</option>
+                                <option value="سبيكر">سبيكر</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="updatePrice">Price</label>
+                            <input type="number" class="form-control" id="updatePrice" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateDescription">Description</label>
+                            <input type="text" class="form-control" id="updateDescription" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="updateImage">Image</label>
+                            <input type="file" class="form-control" id="updateImage" accept="image/*">
+                            <label class="custom-file-upload">
+                                Choose Image
+                            </label>
+                            <img id="updateImagePreview" src="#" alt="Preview"
+                                style="display: none; max-width: 100%; margin-top: 10px;">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Update</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal for adding product -->
+    <div class="modal fade" id="addProductModal" tabindex="-1" role="dialog" aria-labelledby="addProductModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="addProductModalLabel">Add Product</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="addProductForm">
+                        <div class="form-group">
+                            <label for="addName">Name</label>
+                            <select class="form-control" id="addName" required>
+                                <option value="باور بانك">باور بانك</option>
+                                <option value="كفرات">كفرات</option>
+                                <option value="وصلات">وصلات</option>
+                                <option value="شواحن">شواحن</option>
+                                <option value="ساعه سمارت">ساعه سمارت</option>
+                                <option value="سماعه بسلك">سماعه بسلك</option>
+                                <option value="أيربودز">أيربودز</option>
+                                <option value="سبيكر">سبيكر</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="addPrice">Price</label>
+                            <input type="number" class="form-control" id="addPrice" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="addDescription">Description</label>
+                            <input type="text" class="form-control" id="addDescription" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="addImage">Image</label>
+                            <input type="file" class="form-control" id="addImage" accept="image/*" required>
+                            <label class="custom-file-upload">
+                                Choose Image
+                            </label>
+                            <img id="addImagePreview" src="#" alt="Preview"
+                                style="display: none; max-width: 100%; margin-top: 10px;">
+                        </div>
+                        <button type="submit" class="btn btn-primary">Add</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="scripts.js"></script>
+    <!-- <script src="scripts2.js"></script> -->
+
+    <script>
+        $(document).ready(function () {
+         
+            $("#addImage").change(function () {
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#addImagePreview").attr("src", e.target.result).show();
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
+
+           
+            $("#updateImage").change(function () {
+                var input = this;
+                if (input.files && input.files[0]) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#updateImagePreview").attr("src", e.target.result).show();
+                    };
+                    reader.readAsDataURL(input.files[0]);
+                }
+            });
+
+           
+            $("#addProductForm").submit(function (event) {
+                event.preventDefault();
+                var name = $("#addName").val();
+                var price = $("#addPrice").val();
+                var description = $("#addDescription").val();
+                var imageFile = $("#addImage")[0].files[0]; 
+
+                if (imageFile) {
+                    var reader = new FileReader();
+                    reader.onload = function (e) {
+                        $("#addImagePreview").attr("src", e.target.result).show();
+                    };
+                    reader.readAsDataURL(imageFile);
+                }
+
+               
+                uploadToCloudinary(imageFile, function (imageUrl) {
+                   
+                    addProduct(name, price, description, imageUrl);
+                });
+            });
+
+            function uploadToCloudinary(file, callback) {
+                var formData = new FormData();
+                formData.append("file", file);
+                formData.append("upload_preset", "LocalCrafts");
+
+                $.ajax({
+                    url: "https://api.cloudinary.com/v1_1/dbtaj8rn6/image/upload",
+                    type: "POST",
+                    data: formData,
+                    processData: false,
+                    contentType: false,
+                    success: function (data) {
+                        var imageUrl = data.secure_url;
+                        callback(imageUrl);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.error("Cloudinary upload error:", errorThrown);
+                        alert("Failed to upload image to Cloudinary.");
+                    }
+                });
+            }
+
+            function addProduct(name, price, description, imageUrl) {
+              
+                $.ajax({
+                    type: "POST",
+                    url: "/products",
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+                    },
+                    data: JSON.stringify({
+                        name: name,
+                        price: price,
+                        description: description,
+                        image: imageUrl, 
+                    }),
+                    contentType: "application/json",
+                    success: function (data) {
+                        alert("Product added successfully.");
+                        $("#addProductForm")[0].reset();
+                       
+                        $("#addProductModal").modal("hide");
+                        fetchProducts();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.error(xhr.responseText);
+                        var errorMessage = "An error occurred";
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        }
+                        alert("Failed to add product: " + errorMessage);
+                    },
+                });
+            }
+
+           
+            function fetchProducts() {
+                $.ajax({
+                    type: "GET",
+                    url: "/products",
+                    success: function (products) {
+                        var productListHtml = "";
+                        products.forEach(function (product) {
+                            productListHtml += '<div class="card mb-3">';
+                            productListHtml += '<img src="' + product.image + '" class="card-img-top" alt="Product Image">';
+                            productListHtml += '<div class="card-body">';
+                            productListHtml += '<h5 class="card-title">' + product.name + "</h5>";
+                            productListHtml += '<p class="card-text">' + product.description + "</p>";
+                            productListHtml += '<p class="card-text">   السعر:' + product.price +`  جنيه</p>`;
+                            productListHtml += '<button class="btn btn-primary update-product" data-id="' + product._id + '">Update</button>';
+                            productListHtml += '<button class="btn btn-danger delete-product" data-id="' + product._id + '">Delete</button>';
+                            productListHtml += "</div></div>";
+                        });
+                        $("#productList").html(productListHtml);
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.log(xhr.responseText);
+                        var errorMessage = "Failed to retrieve products";
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        }
+                        alert(errorMessage);
+                    },
+                });
+            }
+
+           
+            if (localStorage.getItem("accessToken")) {
+                fetchProducts();
+            }
+
+         
+            $("#updateProductForm").submit(function (event) {
+                event.preventDefault();
+                var productId = $("#productId").val();
+                var name = $("#updateName").val();
+                var price = $("#updatePrice").val();
+                var description = $("#updateDescription").val();
+                var imageFile = $("#updateImage")[0].files[0]; 
+
+              
+                if (imageFile) {
+                    uploadToCloudinary(imageFile, function (imageUrl) {
+                       
+                        updateProduct(productId, name, price, description, imageUrl);
+                    });
+                } else {
+
+                    var imageUrl = $("#updateImagePreview").attr("src"); 
+                    updateProduct(productId, name, price, description, imageUrl);
+                }
+            });
+
+            function updateProduct(productId, name, price, description, imageUrl) {
+                
+                $.ajax({
+                    type: "PATCH",
+                    url: "/products/" + productId,
+                    headers: {
+                        Authorization: "Bearer " + localStorage.getItem("accessToken"),
+                    },
+                    data: JSON.stringify({
+                        name: name,
+                        price: price,
+                        description: description,
+                        image: imageUrl,
+                    }),
+                    contentType: "application/json",
+                    success: function () {
+                        $("#updateProductModal").modal("hide");
+                        fetchProducts();
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.error(xhr.responseText);
+                        var errorMessage = "Failed to update product";
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        }
+                        alert(errorMessage);
+                    },
+                });
+            }
+            $(document).on("click", ".delete-product", function () {
+                var productId = $(this).data("id");
+                if (confirm("Are you sure you want to delete this product?")) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: "/products/" + productId,
+                        headers: {
+                            Authorization: "Bearer " + localStorage.getItem("accessToken"),
+                        },
+                        success: function () {
+                            fetchProducts();
+                        },
+                        error: function (xhr, textStatus, errorThrown) {
+                            console.error(xhr.responseText);
+                            var errorMessage = "Failed to delete product";
+                            if (xhr.responseJSON && xhr.responseJSON.message) {
+                                errorMessage = xhr.responseJSON.message;
+                            }
+                            alert(errorMessage);
+                        },
+                    });
+                }
+            });
+
+            $(document).on("click", ".update-product", function () {
+                var productId = $(this).data("id");
+                $.ajax({
+                    type: "GET",
+                    url: "/products/" + productId,
+                    success: function (product) {
+                        $("#productId").val(product._id);
+                        $("#updateName").val(product.name);
+                        $("#updatePrice").val(product.price);
+                        $("#updateDescription").val(product.description);
+                        $("#updateImagePreview").attr("src", product.image).show();
+                        $("#updateProductModal").modal("show");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        console.error(xhr.responseText);
+                        var errorMessage = "Failed to retrieve product data";
+                        if (xhr.responseJSON && xhr.responseJSON.message) {
+                            errorMessage = xhr.responseJSON.message;
+                        }
+                        alert(errorMessage);
+                    },
+                });
+            });
+        });
+    </script>
+
+
+</body>
+
+</html>

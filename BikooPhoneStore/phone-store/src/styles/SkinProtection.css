@@ -1,0 +1,27 @@
+.skin-protection-container {
+    padding: 40px;
+}
+
+.image-col {
+    display: flex;
+    align-items: center;
+}
+
+.machine-image {
+    width: 100%;
+    
+}
+
+.image-description {
+    text-align: right;
+}
+
+.slider-col {
+    margin-top: 40px;
+}
+p{
+    color: gray;
+    margin-top: 5vh;
+    font-size: 18px;
+    font-family:cursive;
+}

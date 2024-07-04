@@ -1,0 +1,43 @@
+.phone-repair-container {
+    padding: 40px;
+}
+
+.big-title {
+    margin-top: 40px;
+    font-size: 2.5rem;
+    font-weight: bold;
+    color: gray;
+}
+
+.center-image {
+    height: 120%;
+}
+
+.text-right {
+    text-align: right;
+    font-family: cursive;
+    font-size: large;
+}
+
+
+.text-right ul {
+    list-style-type: none;
+    padding: 0;
+    margin-top: 10vh;
+    
+}
+
+.text-right ul li {
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.text-right ul li:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transform: translateY(-5px);
+}
